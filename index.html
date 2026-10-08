@@ -3,47 +3,320 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RePieza IA | MVP</title>
+<title>RePieza IA - MVP</title>
+<meta name="description" content="MVP interactivo de RePieza IA">
 <style>
-:root{--navy:#102b43;--blue:#0d7fe8;--bg:#edf3f8;--line:#d8e3ee;--muted:#6f8193;--green:#16895a}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Segoe UI,sans-serif;background:radial-gradient(circle at 10% 0,#dceeff,transparent 30%),var(--bg);color:#17293b}
-.wrap{width:min(1450px,calc(100% - 30px));margin:auto;padding:20px 0 35px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:15px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,var(--blue),#07559a);color:#fff;font-weight:900}.brand h1{margin:0;color:var(--navy)}.brand p{margin:3px 0;color:var(--muted);font-size:.9rem}.hero{background:linear-gradient(135deg,#0f2c46,#123f68);color:#fff;border-radius:28px;padding:26px 28px;box-shadow:0 18px 50px #173d5f20}.hero h2{font-size:clamp(1.65rem,3vw,2.7rem);margin:6px 0 10px;max-width:900px;line-height:1.05}.hero p{max-width:980px;color:#d4e3ef;line-height:1.5}.tag{display:inline-flex;background:#ffffff18;border:1px solid #ffffff24;border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:16px 0}.step{background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px;font-weight:750;color:var(--muted)}.step.on{background:#eaf5ff;color:var(--navy);border-color:#a9d5ff}.step.done{background:#e9f7f0;color:#126d49}.main{display:grid;grid-template-columns:.82fr 1.35fr;gap:18px;align-items:start}.card{background:#fffffff0;border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 50px #173d5f16;overflow:hidden}.head{padding:19px 20px 0}.head h3{margin:0;color:var(--navy)}.head p{margin:5px 0 0;color:var(--muted);font-size:.88rem}.body{padding:18px 20px 20px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.field{margin-bottom:13px}.field label{display:block;font-size:.8rem;font-weight:800;color:var(--navy);margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff;outline:none}.field textarea{min-height:80px;resize:vertical}.drop{border:1.5px dashed #b9d0e4;border-radius:15px;padding:12px;background:#f7fbfe;display:flex;align-items:center;justify-content:space-between;gap:10px}.btn{border:0;border-radius:12px;padding:11px 14px;font-weight:800;cursor:pointer}.primary{background:var(--blue);color:#fff;width:100%}.secondary{background:#fff;border:1px solid var(--line);color:var(--navy)}.success{background:var(--green);color:#fff}.viewer{position:relative;margin:16px 18px 0;height:470px;border-radius:18px;overflow:hidden;background:linear-gradient(#102b43,#081b2a)}canvas{width:100%;height:100%;display:block}.overlay{position:absolute;inset:0;pointer-events:none}.vtitle{position:absolute;top:13px;left:13px;background:#061827c9;color:white;padding:9px 11px;border-radius:11px;font-size:.82rem}.hint{position:absolute;right:13px;top:13px;background:#061827a8;color:#d6e9f6;padding:7px 10px;border-radius:999px;font-size:.72rem}.empty{position:absolute;inset:0;display:grid;place-items:center;color:#c7d9e7;text-align:center;padding:30px}.empty b{display:block;color:white;font-size:1.05rem;margin-bottom:6px}.loading{position:absolute;inset:0;display:none;place-items:center;background:#061827ee;color:white;padding:25px}.loading.show{display:grid}.progress{height:8px;background:#ffffff14;border-radius:999px;overflow:hidden;margin-top:15px}.bar{height:100%;width:0;background:linear-gradient(90deg,#0d7fe8,#76c1ff);transition:.35s}.results{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;padding:14px 18px}.sub{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fff}.sub h4{margin:0 0 10px;color:var(--navy)}.specs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.spec{background:#f7fafc;border-radius:11px;padding:9px}.spec span{display:block;font-size:.69rem;color:var(--muted)}.spec b{color:var(--navy)}.analysis{color:#42596d;font-size:.82rem;line-height:1.5}.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 18px 18px}.status{display:inline-flex;margin-top:8px;padding:6px 9px;border-radius:999px;background:#fff4d9;color:#86590f;font-size:.74rem;font-weight:800}.note{margin-top:16px;padding:13px 15px;border:1px solid var(--line);border-radius:14px;background:#ffffffb8;color:#556b7f;font-size:.8rem;line-height:1.5}
-@media(max-width:1000px){.main{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.viewer{height:420px}}@media(max-width:650px){.grid2,.grid4,.results,.actions{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.brand p{display:none}}
+:root{
+  --azul:#0b72e7;--azul-osc:#0f2942;--fondo:#f4f7fb;--borde:#dfe7f0;
+  --texto:#1c2d3d;--muted:#6d7f91;--ok:#17895b;--blanco:#fff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--fondo);color:var(--texto)}
+button,input,textarea{font:inherit}
+.app{min-height:100vh}
+.topbar{background:var(--blanco);border-bottom:1px solid var(--borde);padding:16px 22px}
+.topbar-inner{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:13px;background:var(--azul);display:grid;place-items:center;color:#fff;font-weight:900}
+.brand h1{font-size:1.15rem;margin:0;color:var(--azul-osc)}
+.brand p{font-size:.82rem;color:var(--muted);margin:3px 0 0}
+.badge{font-size:.75rem;font-weight:800;color:var(--azul);background:#eaf4ff;padding:7px 10px;border-radius:999px}
+.container{max-width:1180px;margin:auto;padding:26px 22px 40px}
+.hero{margin-bottom:22px}
+.hero h2{font-size:clamp(1.8rem,3.4vw,3rem);line-height:1.05;margin:0 0 10px;color:var(--azul-osc);max-width:850px}
+.hero p{margin:0;color:var(--muted);max-width:850px;line-height:1.55}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.step{padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--borde);font-size:.78rem;font-weight:800;color:var(--muted)}
+.step.active{background:#eaf4ff;color:var(--azul);border-color:#b8dafe}
+.step.done{background:#eaf8f1;color:var(--ok);border-color:#bfe7d3}
+.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:start}
+.card{background:#fff;border:1px solid var(--borde);border-radius:20px;box-shadow:0 12px 35px #15324d10}
+.card-head{padding:20px 20px 0}
+.card-head h3{margin:0;color:var(--azul-osc);font-size:1.05rem}
+.card-head p{margin:5px 0 0;color:var(--muted);font-size:.84rem}
+.card-body{padding:18px 20px 20px}
+.field{margin-bottom:13px}
+.field label{display:block;margin-bottom:6px;font-size:.76rem;font-weight:800;color:#40566a}
+.field input,.field textarea{width:100%;border:1px solid var(--borde);border-radius:11px;padding:11px 12px;outline:none;background:#fff}
+.field input:focus,.field textarea:focus{border-color:#94c7fb;box-shadow:0 0 0 3px #e8f4ff}
+.field textarea{min-height:82px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.upload{border:1.5px dashed #bfcfdd;border-radius:13px;background:#f8fbfe;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.upload span{font-size:.82rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:0;border-radius:11px;padding:11px 14px;font-weight:800;cursor:pointer}
+.btn-primary{background:var(--azul);color:#fff;width:100%}
+.btn-secondary{background:#fff;color:var(--azul-osc);border:1px solid var(--borde)}
+.btn-success{background:var(--ok);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.preview{padding:18px 20px 0}
+.stage{height:390px;border-radius:16px;background:linear-gradient(145deg,#102d47,#071c2d);position:relative;overflow:hidden;display:grid;place-items:center}
+.stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff0c 1px,transparent 1px),linear-gradient(90deg,#ffffff0c 1px,transparent 1px);background-size:32px 32px}
+.placeholder{position:relative;z-index:2;text-align:center;color:#c7d8e5;padding:20px}
+.placeholder b{display:block;color:#fff;margin-bottom:6px}
+.result{display:none;position:relative;z-index:2;text-align:center;width:100%;height:100%}
+.result.show{display:grid;place-items:center}
+.result svg{width:min(300px,68%);filter:drop-shadow(0 24px 28px #0008)}
+.loading{display:none;position:absolute;inset:0;z-index:5;background:#071c2dec;color:#fff;padding:28px;place-items:center;text-align:center}
+.loading.show{display:grid}
+.loading small{color:#b9ccda}
+.bar{width:min(420px,90%);height:8px;border-radius:999px;background:#ffffff16;overflow:hidden;margin:16px auto 0}
+.bar span{display:block;height:100%;width:0;background:#4aa6ff;transition:width .35s}
+.status{display:inline-flex;margin-top:9px;padding:6px 9px;border-radius:999px;background:#fff4d9;color:#85590e;font-size:.72rem;font-weight:800}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:15px 20px 18px}
+.info{border:1px solid var(--borde);border-radius:13px;padding:12px}
+.info span{display:block;color:var(--muted);font-size:.7rem;margin-bottom:3px}
+.info b{font-size:.9rem;color:var(--azul-osc)}
+.analysis{margin:0 20px 18px;border:1px solid var(--borde);border-radius:13px;padding:13px;background:#f8fbfe;color:#486075;font-size:.82rem;line-height:1.45}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 20px 20px}
+.note{margin-top:18px;color:var(--muted);font-size:.78rem;line-height:1.5}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.stage{height:350px}}
+@media(max-width:600px){.two,.three,.details,.actions{grid-template-columns:1fr}.brand p{display:none}.container{padding-inline:14px}.topbar{padding-inline:14px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header class="top"><div class="brand"><div class="logo">RP</div><div><h1>RePieza IA</h1><p>Piezas personalizadas para reparar lo que todavía sirve</p></div></div><button class="btn secondary" id="reset">Restablecer demo</button></header>
-<section class="hero"><span class="tag">MVP INTERACTIVO · DEMOSTRACIÓN</span><h2>De una solicitud a una propuesta de repuesto lista para revisión técnica.</h2><p>Ejemplo precargado: una licuadora con el acople plástico del motor desgastado. RePieza IA organiza la solicitud, interpreta medidas, genera una geometría paramétrica y presenta una propuesta visual antes de fabricar.</p></section>
-<div class="steps"><div class="step on" id="s1">1. Solicitud</div><div class="step" id="s2">2. Análisis IA</div><div class="step" id="s3">3. Diseño generado</div><div class="step" id="s4">4. Revisión técnica</div></div>
-<main class="main">
-<section class="card"><div class="head"><h3>Solicitud recibida</h3><p>Datos mínimos para preparar una primera propuesta.</p></div><form class="body" id="form">
-<div class="grid2"><div class="field"><label>Objeto</label><input id="obj" value="Licuadora doméstica"></div><div class="field"><label>Pieza requerida</label><input id="part" value="Acople / engranaje del motor"></div></div>
-<div class="field"><label>Problema</label><textarea id="problem">El acople plástico está desgastado, patina y el vaso deja de girar. El repuesto original no se consigue.</textarea></div>
-<div class="field"><label>Foto de referencia</label><div class="drop"><span id="fname">Referencia opcional</span><button type="button" class="btn secondary" id="choose">Cargar foto</button><input id="photo" type="file" accept="image/*" hidden></div></div>
-<div class="field"><label>Medidas principales</label><div class="grid4"><input id="d" type="number" value="32" min="18" max="70" title="Diámetro exterior mm"><input id="h" type="number" value="14" min="5" max="40" title="Altura mm"><input id="b" type="number" value="6" min="2" max="25" title="Orificio central mm"><input id="t" type="number" value="12" min="6" max="28" title="Dientes"></div></div>
-<div class="grid2"><div class="field"><label>Uso</label><select><option>Transmisión de movimiento</option></select></div><div class="field"><label>Cantidad</label><input id="q" type="number" min="1" max="20" value="1"></div></div>
-<button class="btn primary" type="submit">Generar propuesta con IA</button></form></section>
-<section class="card"><div class="head"><h3>Resultado de RePieza IA</h3><span class="status" id="status">Esperando solicitud</span></div>
-<div class="viewer"><canvas id="cv"></canvas><div class="overlay"><div class="vtitle">Acople paramétrico · modelo conceptual 3D</div><div class="hint">Arrastra para girar · rueda para zoom</div></div><div class="empty" id="empty"><div><b>Aún no hay una pieza generada</b>Usa el pedido de ejemplo y pulsa “Generar propuesta con IA”.</div></div><div class="loading" id="loading"><div style="width:min(520px,90%)"><h3 style="margin:0">RePieza IA está preparando la propuesta</h3><p id="msg" style="color:#bcd0df">Analizando solicitud...</p><div class="progress"><div class="bar" id="bar"></div></div></div></div></div>
-<div class="results"><section class="sub"><h4>Especificaciones generadas</h4><div class="specs">
-<div class="spec"><span>Diámetro exterior</span><b id="sd">—</b></div><div class="spec"><span>Altura</span><b id="sh">—</b></div><div class="spec"><span>Orificio central</span><b id="sb">—</b></div><div class="spec"><span>Dientes</span><b id="st">—</b></div><div class="spec"><span>Material sugerido</span><b id="sm">—</b></div><div class="spec"><span>Tolerancia inicial</span><b id="tol">—</b></div><div class="spec"><span>Tiempo estimado</span><b id="time">—</b></div><div class="spec"><span>Cotización inicial</span><b id="price">—</b></div></div></section>
-<section class="sub"><h4>Análisis asistido</h4><div class="analysis" id="analysis">La propuesta técnica aparecerá aquí después de generar el diseño.</div></section></div>
-<div class="actions"><button class="btn secondary" id="stl" disabled>Descargar STL</button><button class="btn secondary" id="adjust" disabled>Solicitar ajuste</button><button class="btn success" id="approve" disabled>Aprobar propuesta</button></div></section>
+<div class="app">
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo">RP</div>
+      <div>
+        <h1>RePieza IA</h1>
+        <p>Repuestos personalizados bajo pedido</p>
+      </div>
+    </div>
+    <span class="badge">MVP DEMOSTRATIVO</span>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h2>Solicita una pieza. La IA prepara una propuesta para revisión.</h2>
+    <p>Este prototipo muestra el flujo de RePieza IA con un ejemplo sencillo: una licuadora cuyo acople plástico del motor está dañado.</p>
+  </section>
+
+  <div class="steps">
+    <span class="step active" id="step1">1. Solicitud</span>
+    <span class="step" id="step2">2. Generación</span>
+    <span class="step" id="step3">3. Propuesta</span>
+  </div>
+
+  <section class="grid">
+    <article class="card">
+      <div class="card-head">
+        <h3>1. Datos de la pieza</h3>
+        <p>El ejemplo ya viene listo para usar durante la exposición.</p>
+      </div>
+      <form class="card-body" id="requestForm">
+        <div class="two">
+          <div class="field">
+            <label>Objeto</label>
+            <input id="object" value="Licuadora doméstica">
+          </div>
+          <div class="field">
+            <label>Pieza dañada</label>
+            <input id="piece" value="Acople del motor">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Problema</label>
+          <textarea id="problem">El acople plástico está desgastado y el vaso deja de girar. El repuesto original ya no se consigue.</textarea>
+        </div>
+
+        <div class="field">
+          <label>Foto de referencia</label>
+          <div class="upload">
+            <span id="fileName">Opcional para esta demostración</span>
+            <button type="button" class="btn btn-secondary" id="pickPhoto">Cargar foto</button>
+            <input type="file" accept="image/*" hidden id="photo">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Medidas aproximadas</label>
+          <div class="three">
+            <input id="diameter" type="number" min="20" max="70" value="32" title="Diámetro exterior en mm">
+            <input id="height" type="number" min="5" max="40" value="14" title="Altura en mm">
+            <input id="hole" type="number" min="2" max="20" value="6" title="Orificio central en mm">
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Generar pieza con IA</button>
+      </form>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <h3>2. Propuesta generada</h3>
+        <span class="status" id="status">Esperando solicitud</span>
+      </div>
+
+      <div class="preview">
+        <div class="stage">
+          <div class="placeholder" id="placeholder">
+            <b>Aún no hay una pieza generada</b>
+            Pulsa “Generar pieza con IA”.
+          </div>
+
+          <div class="result" id="result">
+            <svg id="gearSvg" viewBox="-80 -80 160 160" aria-label="Modelo conceptual de la pieza">
+              <defs>
+                <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#70c2ff"/>
+                  <stop offset="1" stop-color="#0b72e7"/>
+                </linearGradient>
+              </defs>
+              <path id="gearPath" fill="url(#g)" fill-rule="evenodd" stroke="#d8efff" stroke-width="1.2"></path>
+              <ellipse cx="0" cy="50" rx="44" ry="8" fill="#000" opacity=".16"></ellipse>
+            </svg>
+          </div>
+
+          <div class="loading" id="loading">
+            <div>
+              <h3 id="loadingTitle">Analizando solicitud...</h3>
+              <small id="loadingText">Organizando medidas y uso de la pieza.</small>
+              <div class="bar"><span id="progress"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="details">
+        <div class="info"><span>Pieza</span><b id="rPiece">—</b></div>
+        <div class="info"><span>Material sugerido</span><b id="rMaterial">—</b></div>
+        <div class="info"><span>Medidas</span><b id="rMeasures">—</b></div>
+        <div class="info"><span>Tiempo estimado</span><b id="rTime">—</b></div>
+        <div class="info"><span>Costo estimado</span><b id="rPrice">—</b></div>
+        <div class="info"><span>Estado</span><b id="rState">—</b></div>
+      </div>
+
+      <div class="analysis" id="analysis">
+        La recomendación aparecerá aquí cuando la propuesta sea generada.
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" id="newRequest" disabled>Nueva solicitud</button>
+        <button class="btn btn-success" id="approve" disabled>Aprobar propuesta</button>
+      </div>
+    </article>
+  </section>
+
+  <p class="note"><b>Nota:</b> este MVP simula el apoyo de IA y genera una representación conceptual. Antes de fabricar una pieza real, el equipo debe validar medidas, material y ajuste.</p>
 </main>
-<div class="note"><b>Alcance del MVP:</b> la interfaz demuestra el flujo del producto. La geometría es paramétrica y sirve como prueba visual; una pieza real requiere validación dimensional, material y revisión técnica antes de imprimirse.</div>
 </div>
+
 <script>
-const $=s=>document.querySelector(s);const cv=$('#cv'),ctx=cv.getContext('2d');let state={mesh:null,rx:-.5,ry:.7,zoom:1,drag:false,lx:0,ly:0,p:null};
-function flow(n){for(let i=1;i<=4;i++){const e=$('#s'+i);e.className='step'+(i<n?' done':i===n?' on':'')}}
-function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
-function params(){return{d:clamp(+$('[id=d]').value||32,18,70),h:clamp(+$('[id=h]').value||14,5,40),b:clamp(+$('[id=b]').value||6,2,25),t:Math.round(clamp(+$('[id=t]').value||12,6,28)),q:Math.round(clamp(+$('[id=q]').value||1,1,20))}}
-function mesh(p){const n=p.t*2,ro=p.d/2,rr=ro*.8,ri=p.b/2,zt=p.h/2,zb=-p.h/2,V=[],F=[];for(let z of [zt,zb])for(let i=0;i<n;i++){const a=i/n*Math.PI*2,r=i%2?rr:ro;V.push({x:Math.cos(a)*r,y:Math.sin(a)*r,z})}for(let z of [zt,zb])for(let i=0;i<n;i++){const a=i/n*Math.PI*2;V.push({x:Math.cos(a)*ri,y:Math.sin(a)*ri,z})}let ot=0,ob=n,it=2*n,ib=3*n;for(let i=0;i<n;i++){let j=(i+1)%n;F.push([ot+i,ob+i,ob+j],[ot+i,ob+j,ot+j],[it+i,it+j,ib+j],[it+i,ib+j,ib+i],[ot+i,ot+j,it+j],[ot+i,it+j,it+i],[ob+i,ib+i,ib+j],[ob+i,ib+j,ob+j])}return{V,F}}
-function rot(p){let cy=Math.cos(state.ry),sy=Math.sin(state.ry),cx=Math.cos(state.rx),sx=Math.sin(state.rx),x=p.x*cy+p.z*sy,z=-p.x*sy+p.z*cy,y=p.y;return{x,y:y*cx-z*sx,z:y*sx+z*cx}}
-function draw(){let r=cv.getBoundingClientRect(),dp=Math.min(devicePixelRatio||1,2),w=cv.width=Math.round(r.width*dp),h=cv.height=Math.round(r.height*dp);ctx.clearRect(0,0,w,h);ctx.strokeStyle='#5ca8df33';for(let x=0;x<w;x+=34){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=0;y<h;y+=34){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}if(!state.mesh){requestAnimationFrame(draw);return}state.ry+=.0025;let R=state.mesh.V.map(rot),scale=Math.min(w,h)*.38*state.zoom/state.p.d,cx=w/2,cy=h*.54,cam=110,P=R.map(p=>{let k=cam/(cam+p.z+28);return{x:cx+p.x*scale*k,y:cy-p.y*scale*k,z:p.z}}),polys=state.mesh.F.map(f=>({f,z:(R[f[0]].z+R[f[1]].z+R[f[2]].z)/3})).sort((a,b)=>a.z-b.z);for(let po of polys){let[a,b,c]=po.f.map(i=>P[i]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y);ctx.closePath();ctx.fillStyle='rgba(46,157,239,.78)';ctx.fill();ctx.strokeStyle='#d9f1ff22';ctx.stroke()}requestAnimationFrame(draw)}draw();
-$('#form').addEventListener('submit',async e=>{e.preventDefault();let p=params();if(p.b>p.d*.65){alert('El orificio central es demasiado grande para esta pieza.');return}flow(2);$('#empty').style.display='none';$('#loading').classList.add('show');$('#status').textContent='Analizando solicitud';let msgs=['Organizando requisitos del cliente...','Interpretando medidas y tolerancias...','Generando geometría paramétrica...','Preparando propuesta para revisión técnica...'];for(let i=0;i<4;i++){ $('#msg').textContent=msgs[i];$('#bar').style.width=((i+1)*25)+'%';await new Promise(r=>setTimeout(r,650))}state.p=p;state.mesh=mesh(p);$('#loading').classList.remove('show');flow(3);$('#status').textContent='Diseño generado';$('#sd').textContent=p.d+' mm';$('#sh').textContent=p.h+' mm';$('#sb').textContent=p.b+' mm';$('#st').textContent=p.t;$('#sm').textContent='PETG reforzado';$('#tol').textContent='± 0,30 mm';let mins=Math.round(38+p.d*.8+p.t*1.2);$('#time').textContent=mins+' min';let total=18000+Math.round((14000+p.d*260+p.t*300)*p.q/500)*500;$('#price').textContent=new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(total);$('#analysis').innerHTML='<b>Propuesta inicial:</b> la pieza puede fabricarse como prototipo en PETG por su resistencia y facilidad de impresión. Se recomienda comprobar el diámetro del eje, el sentido de transmisión y realizar una prueba de ajuste antes de producir la versión final.';$('#stl').disabled=$('#adjust').disabled=$('#approve').disabled=false});
-$('#approve').onclick=()=>{flow(4);$('#status').textContent='Propuesta aprobada para revisión técnica';alert('Propuesta aprobada. El siguiente paso es validar medidas y autorizar fabricación.')};$('#adjust').onclick=()=>alert('Solicitud de ajuste registrada para revisión del equipo.');$('#choose').onclick=()=>$('#photo').click();$('#photo').onchange=e=>$('#fname').textContent=e.target.files[0]?.name||'Referencia opcional';
-function stl(){if(!state.mesh)return;let out='solid repieza\n';for(let f of state.mesh.F){let a=state.mesh.V[f[0]],b=state.mesh.V[f[1]],c=state.mesh.V[f[2]];out+=' facet normal 0 0 0\n  outer loop\n   vertex '+a.x+' '+a.y+' '+a.z+'\n   vertex '+b.x+' '+b.y+' '+b.z+'\n   vertex '+c.x+' '+c.y+' '+c.z+'\n  endloop\n endfacet\n'}out+='endsolid repieza\n';let blob=new Blob([out],{type:'model/stl'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='repieza-acople-licuadora.stl';a.click();URL.revokeObjectURL(a.href)}$('#stl').onclick=stl;
-$('#reset').onclick=()=>location.reload();cv.onpointerdown=e=>{state.drag=true;state.lx=e.clientX;state.ly=e.clientY};window.onpointerup=()=>state.drag=false;window.onpointermove=e=>{if(!state.drag)return;state.ry+=(e.clientX-state.lx)*.01;state.rx+=(e.clientY-state.ly)*.01;state.lx=e.clientX;state.ly=e.clientY};cv.onwheel=e=>{e.preventDefault();state.zoom=clamp(state.zoom*(e.deltaY>0?.92:1.08),.65,1.8)}
+const $ = s => document.querySelector(s);
+
+function setStep(n){
+  [1,2,3].forEach(i=>{
+    const el = $('#step'+i);
+    el.className = 'step' + (i<n ? ' done' : i===n ? ' active' : '');
+  });
+}
+
+function gearPath(teeth, outer, inner, hole){
+  const pts=[];
+  const total=teeth*2;
+  for(let i=0;i<total;i++){
+    const a=(Math.PI*2*i/total)-Math.PI/2;
+    const r=i%2===0?outer:inner;
+    pts.push([Math.cos(a)*r,Math.sin(a)*r]);
+  }
+  let d='M '+pts.map(p=>p[0].toFixed(2)+' '+p[1].toFixed(2)).join(' L ')+' Z ';
+  d += 'M '+hole+' 0 ';
+  const segments=40;
+  for(let i=1;i<=segments;i++){
+    const a=-Math.PI*2*i/segments;
+    d += 'L '+(Math.cos(a)*hole).toFixed(2)+' '+(Math.sin(a)*hole).toFixed(2)+' ';
+  }
+  d += 'Z';
+  return d;
+}
+
+function money(v){
+  return new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(v);
+}
+
+$('#pickPhoto').addEventListener('click',()=>$('#photo').click());
+$('#photo').addEventListener('change',e=>{
+  $('#fileName').textContent=e.target.files[0]?.name || 'Opcional para esta demostración';
+});
+
+$('#requestForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+
+  const d = Number($('#diameter').value || 32);
+  const h = Number($('#height').value || 14);
+  const hole = Number($('#hole').value || 6);
+
+  if(hole >= d/2){
+    alert('El orificio central debe ser menor que el radio de la pieza.');
+    return;
+  }
+
+  setStep(2);
+  $('#placeholder').style.display='none';
+  $('#result').classList.remove('show');
+  $('#loading').classList.add('show');
+  $('#status').textContent='Generando propuesta';
+
+  const phases=[
+    ['Analizando solicitud...','Organizando problema, medidas y uso de la pieza.'],
+    ['Proponiendo geometría...','Calculando una forma compatible con el acople.'],
+    ['Seleccionando material...','Comparando resistencia y facilidad de impresión.'],
+    ['Preparando resultado...','Generando la propuesta para revisión técnica.']
+  ];
+
+  for(let i=0;i<phases.length;i++){
+    $('#loadingTitle').textContent=phases[i][0];
+    $('#loadingText').textContent=phases[i][1];
+    $('#progress').style.width=((i+1)*25)+'%';
+    await new Promise(r=>setTimeout(r,550));
+  }
+
+  const teeth=Math.max(8,Math.min(18,Math.round(d/2.5)));
+  $('#gearPath').setAttribute('d',gearPath(teeth,55,44,Math.max(7,hole*1.6)));
+
+  $('#rPiece').textContent=$('#piece').value;
+  $('#rMaterial').textContent='PETG';
+  $('#rMeasures').textContent=d+' mm × '+h+' mm · eje '+hole+' mm';
+  $('#rTime').textContent=Math.round(45+d*.8)+' min';
+  $('#rPrice').textContent=money(22000+Math.round(d*420));
+  $('#rState').textContent='Lista para revisión';
+
+  $('#analysis').innerHTML='<b>Recomendación de RePieza IA:</b> fabricar un primer prototipo en PETG, comprobar el ajuste sobre el eje de la licuadora y corregir tolerancias antes de producir la versión final.';
+
+  $('#loading').classList.remove('show');
+  $('#result').classList.add('show');
+  $('#status').textContent='Propuesta generada';
+  $('#newRequest').disabled=false;
+  $('#approve').disabled=false;
+  setStep(3);
+});
+
+$('#approve').addEventListener('click',()=>{
+  $('#status').textContent='Aprobada para revisión técnica';
+  $('#rState').textContent='Aprobada';
+  alert('Propuesta aprobada. El siguiente paso sería validar medidas y fabricar el prototipo.');
+});
+
+$('#newRequest').addEventListener('click',()=>{
+  $('#requestForm').reset();
+  $('#object').value='Licuadora doméstica';
+  $('#piece').value='Acople del motor';
+  $('#problem').value='El acople plástico está desgastado y el vaso deja de girar. El repuesto original ya no se consigue.';
+  $('#diameter').value=32; $('#height').value=14; $('#hole').value=6;
+  $('#fileName').textContent='Opcional para esta demostración';
+  $('#placeholder').style.display='block';
+  $('#result').classList.remove('show');
+  $('#status').textContent='Esperando solicitud';
+  ['#rPiece','#rMaterial','#rMeasures','#rTime','#rPrice','#rState'].forEach(s=>$(s).textContent='—');
+  $('#analysis').textContent='La recomendación aparecerá aquí cuando la propuesta sea generada.';
+  $('#newRequest').disabled=true; $('#approve').disabled=true;
+  setStep(1);
+});
 </script>
-</body></html>
+</body>
+</html>
